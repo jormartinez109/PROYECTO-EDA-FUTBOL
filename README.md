@@ -1,108 +1,131 @@
-# PROYECTO EDA FUTBOL
 # Football Myths vs Data ⚽
 
-**¿Son ciertos los mitos del fútbol?** Un proyecto de análisis estadístico con Python que pone a prueba algunas de las creencias más extendidas sobre el fútbol mediante datos de partidos de las cinco grandes ligas europeas.
+**¿Cuánto hay de realidad en algunos de los mitos más repetidos del fútbol?**
 
-## 1. Objetivo del proyecto
+Proyecto de análisis exploratorio de datos (EDA) con Python que estudia **45.516 partidos** de las cinco grandes ligas europeas y presenta los resultados en una aplicación interactiva con Streamlit.
 
-El objetivo es analizar estadísticamente partidos de fútbol para comprobar si determinadas creencias tienen respaldo en los datos.
+> El objetivo es describir patrones históricos y contrastar creencias futbolísticas. Los resultados no demuestran causalidad ni predicen partidos futuros.
 
-Entre las preguntas que investigamos están:
+## Aplicación interactiva
 
-- ¿Existe una ventaja real por jugar en casa?
-- ¿Los equipos que realizan más tiros tienen más posibilidades de ganar?
-- ¿Llegar ganando al descanso aumenta las probabilidades de victoria?
-- ¿Cometer más faltas y recibir más tarjetas está relacionado con perder?
-- ¿El equipo con mayor puntuación Elo suele ganar?
+La aplicación permite filtrar por liga, temporada y periodo. Incluye seis apartados:
 
-## 2. Los datos
+1. **Ventaja local:** distribución de resultados y goles medios de locales y visitantes.
+2. **Ataque:** tiros, tiros a puerta y relación con los goles.
+3. **Descanso:** relación entre el resultado al descanso y el resultado final.
+4. **Elo:** relación entre diferencia Elo y diferencia de goles.
+5. **Disciplina:** faltas y tarjetas según el resultado.
+6. **Tu intuición:** explora las frecuencias históricas del resultado final según la situación al descanso.
 
-El análisis utiliza el archivo `Matches.csv`, con información de partidos de las cinco grandes ligas europeas:
+**Estado del despliegue:** el proyecto está preparado para Streamlit Community Cloud. La publicación pública requiere completar el alta y el despliegue desde la cuenta propietaria. Consulta [DEPLOY.md](DEPLOY.md).
 
-- Premier League.
-- LaLiga.
-- Serie A.
-- Ligue 1.
-- Bundesliga.
+## Preguntas del proyecto
 
-**Fuente de los datos:** [Añadir enlace original de descarga].
+- ¿Existe una ventaja descriptiva por jugar en casa?
+- ¿Los equipos que realizan más tiros y tiros a puerta consiguen mejores resultados?
+- ¿Qué relación hay entre el resultado al descanso y el resultado final?
+- ¿El equipo con mayor puntuación Elo suele imponerse?
+- ¿Cómo varían las faltas y las tarjetas según el resultado?
 
-**Estructura del dataset final:**
-- Filas: [Completar con el número de filas después de la limpieza].
-- Columnas: 22.
-- Cada fila representa un partido de fútbol.
+## Datos y procedencia
 
-Las variables incluyen información sobre los equipos, goles, resultados al descanso y al final, puntuaciones Elo, tiros, faltas y tarjetas.
+El archivo original `Matches.csv` forma parte de [Club Football Match Data](https://github.com/xgabora/Club-Football-Match-Data). Según el repositorio, los resultados y estadísticas proceden de [Football-Data.co.uk](https://www.football-data.co.uk/) y las puntuaciones Elo de [ClubElo](http://clubelo.com/).
 
-## 3. Limpieza y preparación
+- Archivo original: **238.858 partidos y 48 columnas**.
+- Ligas seleccionadas: Premier League, LaLiga, Serie A, Ligue 1 y Bundesliga.
+- Registros de esas cinco ligas antes de la limpieza final: **45.559**.
+- Dataset final: **45.516 filas y 22 columnas**.
+- Periodo: **28/07/2000 – 03/09/2026**.
+- Cada fila representa un partido.
 
-Antes del análisis se realizaron las siguientes operaciones:
+### Variables
 
-- Selección de las cinco grandes ligas europeas.
-- Selección de las 22 variables relevantes para las preguntas del proyecto.
-- Eliminación de registros con valores ausentes en las variables Elo y resultados al descanso.
-- Conservación de los valores ausentes en tiros, tiros a puerta, faltas y tarjetas, al no disponer de información suficiente para sustituirlos.
-- Sustitución de los códigos originales de las ligas por sus nombres completos.
-- Comprobación de registros duplicados, sin encontrar duplicados.
+| Grupo | Variables |
+|---|---|
+| Identificación | `Liga`, `Fecha`, `Equipo_local`, `Equipo_visitante` |
+| Elo | `Elo_local`, `Elo_visitante` |
+| Resultado | `Goles_local`, `Goles_visitante`, `Resultado_final` |
+| Descanso | `Goles_descanso_local`, `Goles_descanso_visitante`, `Resultado_descanso` |
+| Ataque | `Tiros_local`, `Tiros_visitante`, `Tiros_a_puerta_local`, `Tiros_a_puerta_visitante` |
+| Disciplina | `Faltas_local`, `Faltas_visitante`, `Amarillas_local`, `Amarillas_visitante`, `Rojas_local`, `Rojas_visitante` |
 
-## 4. Principales hallazgos
+Los resultados `H`, `D` y `A` representan victoria local, empate y victoria visitante, respectivamente.
 
-**1. Ventaja de jugar en casa.** Los equipos locales marcaron una media de **1,53 goles por partido**, frente a los 1,16 goles de los visitantes.
+## Limpieza y preparación
 
-**2. Actividad ofensiva.** Los equipos locales realizaron una media de **13,74 tiros por partido**, frente a los 11,04 de los visitantes.
+1. Se seleccionaron las cinco grandes ligas y las 22 variables relacionadas con las preguntas.
+2. Se eliminaron **43 registros** con valores ausentes en Elo o en los datos del descanso necesarios para el análisis.
+3. Se conservaron los valores ausentes de tiros, tiros a puerta, faltas y tarjetas. No se imputaron valores sin justificación; cada análisis utiliza los datos disponibles para la variable correspondiente.
+4. Se sustituyeron los códigos de liga por sus nombres completos.
+5. Se comprobó que el dataset final no contiene filas duplicadas.
 
-**3. Tiros y goles.** La correlación entre los tiros locales y los goles locales fue de **0,26**, lo que indica una relación lineal positiva, aunque débil.
+Los valores ausentes que se mantienen son: 4.911 en cada columna de tiros, 5.717 en cada columna de tiros a puerta, 5.668 en cada columna de faltas, 4.897 en amarillas locales, 4.896 en amarillas visitantes y 4.896 en cada columna de rojas.
 
-Estos resultados son descriptivos y no demuestran por sí solos relaciones causales.
+## Resultados principales
 
-## 5. Aplicación interactiva
+### 1. Ventaja local
 
-La aplicación permite explorar los partidos mediante filtros y visualizar diferentes estadísticas.
+- Victoria local: **45,59 %**.
+- Empate: **25,87 %**.
+- Victoria visitante: **28,54 %**.
+- Goles medios: **1,53** para el equipo local y **1,16** para el visitante.
 
-**Cómo utilizarla:**
-1. Seleccionar una liga.
-2. Ajustar el intervalo de goles locales.
-3. Consultar las métricas y los gráficos.
-4. Explorar la tabla de partidos filtrados.
-5. Responder a la pregunta interactiva y comparar la elección con los resultados históricos.
+### 2. Resultado al descanso
 
-**Captura de la aplicación:**
+- Si el local iba ganando al descanso, acabó ganando el **79,3 %** de las veces.
+- Si el visitante iba ganando al descanso, acabó ganando el **68,1 %**.
+- Si había empate al descanso, el **37,7 %** acabó en empate y el **37,1 %** en victoria local.
 
-![Captura de Football Myths vs Data](captura_app.png)
+### 3. Elo y diferencia de goles
 
-**Enlace a la aplicación:** [Añadir enlace si se publica].
+La correlación entre la diferencia Elo (local menos visitante) y la diferencia de goles fue **0,42**, una asociación positiva moderada. En los partidos con ganador, el equipo con mayor Elo ganó el **66,4 %**. Los empates se excluyen de este último cálculo.
 
-Actualmente, la aplicación se ejecuta localmente mediante Streamlit.
+### 4. Producción ofensiva
 
-## 6. Tecnologías utilizadas
+En partidos ganados por el equipo local, este realizó una media de **14,65 tiros** y **6,28 tiros a puerta**. En los empates, las medias fueron 13,46 y 4,68; en las derrotas locales, 12,56 y 4,09. Las medias usan solo los partidos con el dato disponible.
 
-- Python.
-- Pandas.
-- Matplotlib.
-- Streamlit.
+## Cómo ejecutar el proyecto
 
-## 7. Cómo ejecutar el proyecto
-
-1. Descargar o clonar el repositorio.
-2. Abrir una terminal en la carpeta del proyecto.
-3. Instalar las dependencias:
-
-```bash
-pip install pandas streamlit matplotlib
-```
-
-4. Ejecutar la aplicación:
+Requisitos: Python 3.10 o superior.
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 streamlit run app.py
 ```
 
-La aplicación se abrirá en el navegador.
+En Windows, activa el entorno con:
 
-## 8. Posibles mejoras
+```powershell
+.venv\\Scripts\\activate
+```
 
-- Comparar la ventaja local entre las cinco ligas.
-- Estudiar la relación entre tiros a puerta y resultados.
-- Analizar cómo influye el resultado al descanso en el resultado final.
-- Investigar la relación entre la diferencia de Elo y las victorias inesperadas.
-- Incorporar nuevos indicadores y visualizaciones interactivas.
+La aplicación necesita que `app.py`, `datos_limpios.csv` y `requirements.txt` estén en la raíz del repositorio. El cuaderno `eda.ipynb` conserva el proceso de análisis exploratorio.
+
+## Presentación
+
+El guion de exposición de 8–10 minutos está en [guion_presentacion.md](guion_presentacion.md). La presentación PowerPoint y el paquete completo de trabajo se entregan también como archivos descargables fuera del repositorio.
+
+## Tecnologías
+
+- Python
+- pandas y NumPy
+- Plotly
+- Streamlit
+
+## Limitaciones
+
+- La disponibilidad de tiros, faltas y tarjetas varía según liga y temporada.
+- Los tamaños muestrales pueden cambiar entre análisis por los valores ausentes.
+- Los análisis son descriptivos y no controlan todos los factores que influyen en el resultado.
+- Una correlación o frecuencia observada no implica causalidad.
+- La variable de resultado al descanso no equivale a conocer el minuto exacto en que se marcó el primer gol.
+
+## Fuentes y atribución
+
+- [Club Football Match Data](https://github.com/xgabora/Club-Football-Match-Data)
+- [Football-Data.co.uk](https://www.football-data.co.uk/)
+- [ClubElo](http://clubelo.com/)
+
+Consulta las condiciones de reutilización y licencia en las fuentes originales.
