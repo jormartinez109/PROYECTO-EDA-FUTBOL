@@ -33,4 +33,4 @@ El proyecto convierte un conjunto de datos amplio en información comprensible e
 
 ---
 
-**Recordatorio para la exposición:** hablar de preguntas, resultados y limitaciones. Abrir la app y usar los filtros en directo. No confundir frecuencias históricas con predicciones.
+
