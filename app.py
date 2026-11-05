@@ -150,12 +150,12 @@ with col4:
     tab_pregunta,
 ) = st.tabs(
     [
-        "🏠 Ventaja local",
-        "🎯 Ataque",
-        "⏱️ Descanso",
-        "📊 Elo",
-        "🟨 Disciplina",
-        "💡 Tu intuición",
+        " Ventaja local",
+        " Ataque",
+        " Descanso",
+        " Elo",
+        " Disciplina",
+        " Tu intuición",
     ]
 )
 
