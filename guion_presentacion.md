@@ -4,9 +4,6 @@
 
 En el fútbol se repiten muchas afirmaciones: que jugar en casa supone una ventaja, que quien más tira suele ganar o que llegar por delante al descanso prácticamente asegura el resultado. Queríamos comprobar hasta qué punto estas ideas aparecen en los datos. No buscamos predecir partidos, sino describir patrones y comprobar qué afirmaciones tienen respaldo histórico. 
 
-¿Los equipos locales ganan más que los visitantes?
-¿Los equipos que realizan más tiros consiguen mejores resultados?
-¿Con qué frecuencia se producen remontadas?
 
 ## 2. Los datos 
 
